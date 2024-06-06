@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const pedido  =  {
-  "_id": "6661dce431dbe482678727da",
+  "_id": "66621e9fa46d7d1ecd206f08",
   "cliente": {
       "nome": "Luís Giovanni Hugo Ribeiro",
       "cpf": "28265400500",
@@ -23,17 +23,19 @@ const pedido  =  {
           "bairro": "Nova Cidade",
           "cidade": "Manaus",
           "uf": "AM",
-          "cep": "69097276"
-      }
+          "cep": "69097276",
+          "_id": "66621e9fa46d7d1ecd206f0a"
+      },
+      "_id": "66621e9fa46d7d1ecd206f09"
   },
   "itens": [
       {
-        "_id": "6661dc5b31dbe482678727ce",
-        "nome": "Quotes",
-        "repo": "https://github.com/alexandreaquiles/quote-ebook.git",
-        "__v": 0,
-        "preco": 79.90
-    }
+          "ebookId": "66621e3ba46d7d1ecd206f04",
+          "nome": "Quotes",
+          "repo": "https://github.com/alexandreaquiles/quote-ebook.git",
+          "preco": 79.9,
+          "_id": "66621e9fa46d7d1ecd206f0b"
+      }
   ],
   "__v": 0
 }
@@ -83,38 +85,9 @@ Seu(s) ebook(s) já está(ão) sendo gerado(s):
 ${pedido.itens.map(item =>
     `- Ebook: "${item.nome}" (R$ ${item.preco.toFixed(2).replace('.', ',')})`).join('')}
 
-Os dados da estão da sua nota fiscal estão a seguir:
+Os dados da sua nota fiscal estão a seguir:
 
-<xml>
-  <loja>314276853</loja>
-  <nat_operacao>LIVROS VIRTUAIS (E-BOOKS) POR DOWNLOAD; COMÉRCIO VAREJISTA DE</nat_operacao>
-  <pedido>
-    <items>
-      <item>
-          <descricao>Quotes</descricao>
-          <un>un</un>
-          <codigo>004</codigo>
-          <qtde>1</qtde>
-          <vlr_unit>79.9</vlr_unit>
-          <tipo>P</tipo>
-          <class_fiscal>4761001</class_fiscal>
-        </item>
-    </items>
-  </pedido>
-  <cliente>
-    <nome>Luís Giovanni Hugo Ribeiro</nome>
-    <tipoPessoa>F</tipoPessoa>
-    <contribuinte>9</contribuinte>
-    <cpf_cnpj>28265400500</cpf_cnpj>
-    <email>luis_giovanni_ribeiro@terapeutaholistica.com.br</email>
-    <endereco>Rua Albânia, 432</endereco>
-    <bairro>Nova Cidade</bairro>
-    <cidade>Manaus</cidade>
-    <estado></estado>
-    <complemento></complemento>
-    <cep>69097276</cep>
-  </cliente>
-</xml>`
+${notaFiscal}`;
 
 const mailOptions = {
   from: 'info@ebook-verse.com',

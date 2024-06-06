@@ -43,33 +43,35 @@ if ('.' != argv.d) {
   const git = simpleGit();
 
   const pedido  =  {
-      "_id": "6661dce431dbe482678727da",
-      "cliente": {
-          "nome": "Luís Giovanni Hugo Ribeiro",
-          "cpf": "28265400500",
-          "email": "luis_giovanni_ribeiro@terapeutaholistica.com.br",
-          "telefone": "92982055415",
-          "endereco": {
-              "logradouro": "Rua Albânia",
-              "numero": "432",
-              "complemento": "",
-              "bairro": "Nova Cidade",
-              "cidade": "Manaus",
-              "uf": "AM",
-              "cep": "69097276"
-          }
-      },
-      "itens": [
-          {
-              "_id": "6661dc5b31dbe482678727ce",
-              "nome": "Quotes",
-              "repo": "https://github.com/alexandreaquiles/quote-ebook.git",
-              "__v": 0,
-              "preco": 79.90
-          }
-      ],
-      "__v": 0
-      }
+    "_id": "66621e9fa46d7d1ecd206f08",
+    "cliente": {
+        "nome": "Luís Giovanni Hugo Ribeiro",
+        "cpf": "28265400500",
+        "email": "luis_giovanni_ribeiro@terapeutaholistica.com.br",
+        "telefone": "92982055415",
+        "endereco": {
+            "logradouro": "Rua Albânia",
+            "numero": "432",
+            "complemento": "",
+            "bairro": "Nova Cidade",
+            "cidade": "Manaus",
+            "uf": "AM",
+            "cep": "69097276",
+            "_id": "66621e9fa46d7d1ecd206f0a"
+        },
+        "_id": "66621e9fa46d7d1ecd206f09"
+    },
+    "itens": [
+        {
+            "ebookId": "66621e3ba46d7d1ecd206f04",
+            "nome": "Quotes",
+            "repo": "https://github.com/alexandreaquiles/quote-ebook.git",
+            "preco": 79.9,
+            "_id": "66621e9fa46d7d1ecd206f0b"
+        }
+    ],
+    "__v": 0
+  }
   
   pedido.itens.forEach(async (ebook, i) => { 
       const repoUrl = ebook.repo;

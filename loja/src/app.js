@@ -1,5 +1,13 @@
 import express from 'express';
 import mongoose from "mongoose";
+import { Kafka } from 'kafkajs';
+
+const kafka = new Kafka({
+  clientId: 'loja',
+  brokers: ['localhost:9092'],
+})
+
+const producer = kafka.producer()
 
 const DEFAULT_PRICE = 79.90;
 
@@ -95,6 +103,22 @@ app.post('/pedidos', async (req, res) => {
       itens: ebookDetails
     });
     await pedido.save();
+
+    const mensagem = {
+      key: ''+pedido._id,
+      value: JSON.stringify(pedido)
+    };
+    console.log(mensagem);
+
+    await producer.connect();
+    await producer.send({
+      topic: 'novos-pedidos',
+      messages: [
+        mensagem
+      ]
+    });
+
+    await producer.disconnect();
 
     res.json(pedido);
 
