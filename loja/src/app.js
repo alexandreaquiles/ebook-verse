@@ -1,5 +1,8 @@
 import express from 'express';
 import mongoose from "mongoose";
+
+const DEFAULT_PRICE = 79.90;
+
 mongoose.connect("mongodb://admin:secret@127.0.0.1:27017/loja?authSource=admin");
 
 let db = mongoose.connection;
@@ -8,6 +11,7 @@ const ebookSchema = new mongoose.Schema({
   id: { type: mongoose.Types.ObjectId },
   nome: { type: String, required: true },
   repo: { type: String, required: true },
+  preco: { type: Number, default: DEFAULT_PRICE }
 })
 const Ebook = mongoose.model('Ebook', ebookSchema);
 
@@ -30,7 +34,12 @@ const clienteSchema = new mongoose.Schema({
 const pedidoSchema = new mongoose.Schema({
   id: { type: mongoose.Types.ObjectId },
   cliente: clienteSchema,
-  itens: [{ ebookId: mongoose.Types.ObjectId}],
+  itens: [{
+    ebookId: { type: mongoose.Types.ObjectId, ref: 'Ebook' },
+    nome: { type: String, required: true },
+    repo: { type: String, required: true },
+    preco: { type: Number, required: true }
+  }],
 })
 const Pedido = mongoose.model('Pedido', pedidoSchema);
 
@@ -68,9 +77,31 @@ app.get("/pedidos", async (_, res) => {
   }
 });
 app.post('/pedidos', async (req, res) => {
-  const pedido = new Pedido(req.body)
-  await pedido.save();
-  res.json(pedido);
+  try {
+    const { cliente, itens } = req.body;
+
+    const ebookDetails = await Promise.all(itens.map(async item => {
+      const ebook = await Ebook.findById(item.ebookId);
+      return {
+        ebookId: ebook._id,
+        nome: ebook.nome,
+        repo: ebook.repo,
+        preco: ebook.preco
+      };
+    }));
+
+    const pedido = new Pedido({
+      cliente,
+      itens: ebookDetails
+    });
+    await pedido.save();
+
+    res.json(pedido);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 export default app;
