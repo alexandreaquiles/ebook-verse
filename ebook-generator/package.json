@@ -1,0 +1,18 @@
+{
+  "name": "ebook-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "epub-gen": "^0.1.0",
+    "markdown-it": "^14.1.0",
+    "nodemailer": "^6.9.13",
+    "simple-git": "^3.24.0",
+    "yargs": "^17.7.2"
+  }
+}
