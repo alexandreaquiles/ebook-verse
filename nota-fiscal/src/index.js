@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 });
 
 await consumer.connect();
-await consumer.subscribe({ topic: 'novos-pedidos', fromBeginning: true});
+await consumer.subscribe({ topic: 'novos-pedidos-particionado', fromBeginning: true});
 await consumer.run({
   eachMessage: async ({topic, partition, message}) => {
     const pedido = JSON.parse(message.value);

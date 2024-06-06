@@ -112,7 +112,7 @@ app.post('/pedidos', async (req, res) => {
 
     await producer.connect();
     await producer.send({
-      topic: 'novos-pedidos',
+      topic: 'novos-pedidos-particionado',
       messages: [
         mensagem
       ]
