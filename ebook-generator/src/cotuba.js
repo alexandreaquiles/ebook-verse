@@ -6,6 +6,14 @@ import Epub from 'epub-gen';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import nodemailer from 'nodemailer';
+import { Kafka } from 'kafkajs';
+
+const kafka = new Kafka({
+  brokers: ['localhost:9092'],
+})
+
+const consumer = kafka.consumer({ groupId: 'ebook-generators' })
+
 
 const transporter = nodemailer.createTransport({
   host: 'sandbox.smtp.mailtrap.io',
@@ -15,6 +23,11 @@ const transporter = nodemailer.createTransport({
       pass: "12478209814bd8"
   }
 });
+
+await consumer.connect();
+await consumer.subscribe({ topic: 'novos-pedidos', fromBeginning: true});
+await consumer.run({
+  eachMessage: async ({topic, partition, message}) => {
 
 const argv = yargs(hideBin(process.argv))
 .options({
@@ -40,38 +53,10 @@ if ('.' != argv.d) {
 
   geraEbook();
 } else {
+  
   const git = simpleGit();
 
-  const pedido  =  {
-    "_id": "66621e9fa46d7d1ecd206f08",
-    "cliente": {
-        "nome": "Luís Giovanni Hugo Ribeiro",
-        "cpf": "28265400500",
-        "email": "luis_giovanni_ribeiro@terapeutaholistica.com.br",
-        "telefone": "92982055415",
-        "endereco": {
-            "logradouro": "Rua Albânia",
-            "numero": "432",
-            "complemento": "",
-            "bairro": "Nova Cidade",
-            "cidade": "Manaus",
-            "uf": "AM",
-            "cep": "69097276",
-            "_id": "66621e9fa46d7d1ecd206f0a"
-        },
-        "_id": "66621e9fa46d7d1ecd206f09"
-    },
-    "itens": [
-        {
-            "ebookId": "66621e3ba46d7d1ecd206f04",
-            "nome": "Quotes",
-            "repo": "https://github.com/alexandreaquiles/quote-ebook.git",
-            "preco": 79.9,
-            "_id": "66621e9fa46d7d1ecd206f0b"
-        }
-    ],
-    "__v": 0
-  }
+  const pedido = JSON.parse(message.value);
   
   pedido.itens.forEach(async (ebook, i) => { 
       const repoUrl = ebook.repo;
@@ -175,3 +160,6 @@ async function geraEbook() {
   }
   }
 }
+
+}
+});

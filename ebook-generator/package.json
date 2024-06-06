@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "dev": "node ./src/cotuba.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "epub-gen": "^0.1.0",
+    "kafkajs": "^2.2.4",
     "markdown-it": "^14.1.0",
     "nodemailer": "^6.9.13",
     "simple-git": "^3.24.0",
