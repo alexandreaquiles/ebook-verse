@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "e23c7196-b98b-483a-9354-ab51bdc004c4",
+		"name": "ebook-verse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2489523"
+	},
+	"item": [
+		{
+			"name": "Adicionar ebook",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Quotes\",\n    \"repo\": \"https://github.com/alexandreaquiles/quote-ebook.git\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/ebooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ebooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar ebooks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/ebooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ebooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fazer novo pedido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cliente\": {\n        \"nome\": \"Natália Isabelly Agatha da Mata\",\n        \"cpf\": \"267.175.814-68\",\n        \"email\": \"natalia_damata@deze7.com.br\",\n        \"telefone\": \"(84) 98668-9431\",\n        \"endereco\": {\n            \"logradouro\": \"Rua Severino Cândido Oliveira\",\n            \"numero\": \"586\",\n            \"complemento\": \"\",\n            \"bairro\": \"Nova Esperança\",\n            \"cidade\": \"Parnamirim\",\n            \"uf\": \"RN\",\n            \"cep\": \"59144-310\"\n        }\n    },\n    \"itens\": [\n        { \"ebookId\": \"66621e3ba46d7d1ecd206f04\" }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/pedidos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pedidos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar pedidos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/pedidos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pedidos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
